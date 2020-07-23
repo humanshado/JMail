@@ -16,4 +16,16 @@ class MessagesProvider extends ChangeNotifier {
     _messages = _allMessages;
     notifyListeners();
   }
+
+  Iterable<Message> searchMessages(query) {
+    var _filtered = messages.where((msg) =>
+        msg.subject.toLowerCase().contains(query.toLowerCase()) ||
+        msg.body.toLowerCase().contains(query.toLowerCase()));
+    return _filtered.toList();
+  }
+
+  deleteMessage(index) {
+    _messages.removeAt(index);
+    notifyListeners();
+  }
 }

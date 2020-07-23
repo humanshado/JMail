@@ -54,7 +54,7 @@ class Inbox extends StatelessWidget {
                     caption: 'Delete',
                     color: Colors.red,
                     icon: Icons.delete,
-                    onTap: () => {},
+                    onTap: () => {messagesProvider.deleteMessage(index)},
                   ),
                 ],
               );

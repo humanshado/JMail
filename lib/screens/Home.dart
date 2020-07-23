@@ -1,7 +1,9 @@
 import 'package:JMail/screens/More.dart';
 import 'package:JMail/screens/calendar.dart';
 import 'package:JMail/screens/contacts.dart';
+import 'package:JMail/screens/contactsSearchDelegate.dart';
 import 'package:JMail/screens/inbox.dart';
+import 'package:JMail/screens/messagesSearchDelegate.dart';
 import 'package:JMail/utils/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,7 +37,7 @@ class _HomeState extends State<Home> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                "User",
+                "search",
                 style: TextStyle(
                   fontSize: 15,
                   color: oxfordBlue,
@@ -43,9 +45,22 @@ class _HomeState extends State<Home> {
               ),
               IconButton(
                 color: oxfordBlue,
-                iconSize: 40,
-                icon: Icon(Icons.person),
-                onPressed: () {},
+                iconSize: 30,
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  switch (_currentScreenIndex) {
+                    case 0:
+                      showSearch(
+                          context: context, delegate: MessagesSearchDelegate());
+                      break;
+                    case 1:
+                      showSearch(
+                          context: context, delegate: ContactsSearchDelegate());
+                      break;
+                    default:
+                      return;
+                  }
+                },
               ),
             ],
           ),
@@ -72,7 +87,7 @@ class _HomeState extends State<Home> {
             title: Text('Calendar'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list, color: Colors.grey[400]),
+            icon: Icon(Icons.more_vert, color: Colors.grey[400]),
             title: Text('More'),
           ),
         ],
@@ -83,8 +98,9 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        tooltip: 'compose',
-        child: Icon(Icons.edit),
+        child: _currentScreenIndex == 1
+            ? Icon(Icons.person_add)
+            : Icon(Icons.edit),
       ),
     );
   }
